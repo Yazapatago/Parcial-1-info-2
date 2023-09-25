@@ -1,0 +1,45 @@
+const int SER = 3; // Pin de datos en el integrado (DS)
+const int RCLK = 5; // Pin latch en el integrado (ST_CP)
+const int SRCLK = 4; // Pin clock en el integrado (SH_CP)
+
+byte prueba[8][8] = {
+  {0, 0, 0, 0, 0, 1, 1, 0},
+  {0, 1, 1, 1, 1, 1, 1, 1},
+  {0, 1, 1, 1, 1, 1, 1, 1},
+  {1, 0, 1, 0, 1, 0, 1, 0},
+  {1, 1, 1, 1, 1, 1, 1, 1},
+  {1, 1, 1, 1, 1, 1, 1, 1},
+  {1, 0, 1, 0, 1, 0, 1, 0},
+  {1, 1, 1, 1, 1, 0, 0, 0}
+};
+
+void enviarRegistro(byte datos) {
+  digitalWrite(RCLK, LOW);
+  shiftOut(SER, SRCLK, MSBFIRST, datos); // Enviar el byte usando shiftOut
+  digitalWrite(RCLK, HIGH);
+  digitalWrite(RCLK, LOW);
+}
+
+void verificacion() {
+  for (int col = 0; col < 8; col++) {
+    for (int registro = 0; registro < 8; registro++) {
+      enviarRegistro(prueba[col][registro]);
+    }
+
+    for (int registro = 0; registro < 8; registro++) {
+      enviarRegistro(0);
+    }
+  }
+}
+
+void setup() {
+  pinMode(SER, OUTPUT);
+  pinMode(RCLK, OUTPUT);
+  pinMode(SRCLK, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  verificacion();
+  delay(50); // Pausa entre cada iteración (ajusta según sea necesario)
+}
