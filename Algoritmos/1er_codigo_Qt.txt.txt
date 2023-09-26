@@ -1,0 +1,50 @@
+#include <iostream>
+#include <ctime>
+#include <chrono>
+#include <thread>
+
+using namespace std;
+
+int fila = 8;
+int columna = 8;
+
+int verificacionFlg = false;
+
+void inicializacion(){
+
+}
+
+void verificacion(int repeticiones, int retraso){
+
+    for (int i = 0; i < (repeticiones * 2) + 1; i++)
+    {
+        for (int j = 0; j < fila; j++)
+        {
+            for (int k = 0; k < columna; k++)
+            {
+                cout << verificacionFlg ? "0" : "1";
+            }
+
+            cout << "\n";
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(retraso));
+        verificacionFlg = !verificacionFlg;
+        system("cls");
+    }
+}
+
+int main(){
+
+    int repet;
+
+    cout << "Ingrese numero repeticiones:" << flush;
+    cin >> repet;
+
+    int retraso;
+
+    cout << "Ingrese tiempo in segundos:" << flush;
+    cin >> retraso;
+
+    verificacion(repet, retraso);
+    return 0;
+}
