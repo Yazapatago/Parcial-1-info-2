@@ -1,0 +1,171 @@
+#include <iostream>
+#include <ctime>
+#include <chrono>
+#include <thread>
+#include <string>
+
+using namespace std;
+
+int fila = 8;
+int columna = 8;
+
+int verificacionFlg = false;
+
+int patronRombo [8][8]  = {
+    {0, 0, 0, 1, 1, 0, 0, 0},
+    {0, 0, 1, 1, 1, 1, 0, 0},
+    {0, 1, 1, 1, 1, 1, 1, 0},
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {0, 1, 1, 1, 1, 1, 1, 0},
+    {0, 0, 1, 1, 1, 1, 0, 0},
+    {0, 0, 0, 1, 1, 0, 0, 0}
+};
+
+int patronEquis [8][8]  = {
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {0, 1, 0, 0, 0, 0, 1, 0},
+    {0, 0, 1, 0, 0, 1, 0, 0},
+    {0, 0, 0, 1, 1, 0, 0, 0},
+    {0, 0, 0, 1, 1, 0, 0, 0},
+    {0, 0, 1, 0, 0, 1, 0, 0},
+    {0, 1, 0, 0, 0, 0, 1, 0},
+    {1, 0, 0, 0, 0, 0, 0, 1}
+};
+
+int patronFranjas[8][8] = {
+    {1, 1, 0, 1, 1, 0, 1, 1},
+    {1, 1, 0, 1, 1, 0, 1, 1},
+    {0, 1, 1, 0, 1, 1, 0, 1},
+    {0, 1, 1, 0, 1, 1, 0, 1},
+    {1, 1, 0, 1, 1, 0, 1, 1},
+    {1, 1, 0, 1, 1, 0, 1, 1},
+    {0, 1, 1, 0, 1, 1, 0, 1},
+    {0, 1, 1, 0, 1, 1, 0, 1}
+};
+
+int patronFlecha[8][8] = {
+    {1, 1, 1, 1, 0, 0, 0, 0},
+    {0, 1, 1, 1, 1, 0, 0, 0},
+    {0, 0, 1, 1, 1, 1, 0, 0},
+    {0, 0, 0, 1, 1, 1, 1, 0},
+    {0, 0, 0, 1, 1, 1, 1, 0},
+    {0, 0, 1, 1, 1, 1, 0, 0},
+    {0, 1, 1, 1, 1, 0, 0, 0},
+    {1, 1, 1, 1, 0, 0, 0, 0}
+};
+
+
+void verificacion(int repeticiones, int retraso){
+
+    for (int i = 0; i < (repeticiones * 2) + 1; i++)
+    {   
+        for (int j = 0; j < fila; j++)
+        {
+            for (int k = 0; k < columna; k++)
+            {
+                cout << verificacionFlg ? "0" : "1";                
+            }
+
+            cout << "\n";
+        }        
+        std::this_thread::sleep_for(std::chrono::milliseconds(retraso));
+        verificacionFlg = !verificacionFlg;
+        system("cls");
+    }   
+}
+
+void mostrarPatron(){
+    
+
+    int opcion;
+    int n = 8;
+
+    cout << "Ingrese numero del patron:" << endl;
+    cout << "1). Rombo:" << endl;
+    cout << "2). Equis" << endl;
+    cout << "3). Franjas" << endl;
+    cout << "4). Flecha" << endl;    
+
+    cin >> opcion;
+    if(opcion == 1){       
+       for(int i = 0; i < sizeof(patronRombo) / sizeof(patronRombo[0]); i++){
+            for (int j = 0; j < sizeof(patronRombo[0]) / sizeof(patronRombo[0][0]); j++)
+            {
+                cout << patronRombo[i][j] << " ";
+            }            
+            cout << endl;
+        }   
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));      
+    }else if(opcion == 2){    
+         for(int i = 0; i < sizeof(patronEquis) / sizeof(patronEquis[0]); i++){
+            for (int j = 0; j < sizeof(patronEquis[0]) / sizeof(patronEquis[0][0]); j++)
+            {
+                cout << patronEquis[i][j] << " ";
+            }            
+            cout << endl;
+        }   
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
+    } else if(opcion == 3){
+        for(int i = 0; i < sizeof(patronFranjas) / sizeof(patronFranjas[0]); i++){
+            for (int j = 0; j < sizeof(patronFranjas[0]) / sizeof(patronFranjas[0][0]); j++)
+            {
+                cout << patronFranjas[i][j] << " ";
+            }            
+            cout << endl;
+        }   
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    } else if(opcion == 4){           
+        for(int i = 0; i < sizeof(patronFlecha) / sizeof(patronFlecha[0]); i++){
+            for (int j = 0; j < sizeof(patronFlecha[0]) / sizeof(patronFlecha[0][0]); j++)
+            {
+                cout << patronFlecha[i][j] << " ";
+            }            
+            cout << endl;
+        }   
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }else{
+        cout << "Opcion no contemplada";
+    }    
+}
+
+int publik(int repet, int retraso){
+    int opcion;    
+    cout << " Ingrese Opcion :" << endl;
+    cout << " 1). verificar" << endl;
+    cout << " 2). Dibujar Patron";
+    cin >> opcion;
+
+    switch (opcion)
+    {
+    case 1:
+        verificacion(repet, retraso);           
+        break;
+    case 2:
+        mostrarPatron();
+        break;
+    default:
+        return 1;
+    }       
+
+    return;
+}
+
+
+int main(){
+
+
+    int repet;
+
+    cout << "Ingrese numero repeticiones:" << flush;
+    cin >> repet;
+    
+    int retraso;
+
+    cout << "Ingrese tiempo en segundos:" << flush;
+    cin >> retraso;
+
+    publik(repet, retraso);
+    
+    return 0;
+} 
