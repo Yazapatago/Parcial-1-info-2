@@ -148,7 +148,7 @@ int publik(int repet, int retraso){
         return 1;
     }       
 
-    return;
+    return 0;
 }
 
 
